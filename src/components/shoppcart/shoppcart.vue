@@ -12,8 +12,8 @@
               <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
           </div>
           <div class="content-right">
-              <div class="pay">
-                  ￥{{minPrice}}起送
+              <div class="pay" :class='payClass'>
+                  {{payDesc}}
               </div>
           </div>
       </div>
@@ -57,6 +57,23 @@
                 count+=food.count;
                })
                return count;
+            },
+            payDesc(){
+               if(this.totalPrice==0){
+                return `￥${this.minPrice}元起送`;
+               }else if(this.totalPrice<this.minPrice){
+                var diff=this.minPrice-this.totalPrice;
+                return `还差￥${diff}元起送`;
+               }else{
+                return '去结算';
+               }
+            },
+            payClass(){
+                if(this.totalPrice<this.minPrice){
+                    return 'not-enough';
+                }else{
+                    return 'enough';
+                }
             }
         }
     }
@@ -113,19 +130,21 @@
         height: 100%;
         border-radius: 50%;
         background:#2b343c;
+        position: relative;
     }
-    .shoppcart .content-shop .content-left .logo-wrap .logo .highlight{
+    .shoppcart .content-shop .content-left .logo-wrap .highlight{
         background:rgb(0,160,220);
     }
     .shoppcart .content-shop .content-left .logo-wrap .logo .icon-shopping_cart{
+       float:left;
         font-size: 10px;
         color:#fff;
         text-align: center;
         line-height: 44px;
+        position: absolute;
+        left:8px;
     }
-    .shoppcart .content-shop .content-left .logo-wrap .logo .icon-shopping_cart .highlight{
-         background:rgb(0,160,220);
-    }
+    
     .shoppcart .content-shop .content-left .price{
 
         display: inline-block;
@@ -139,6 +158,9 @@
         font-size: 16px;
         font-weight:700;
         color:rgba(255,255,255,0.4);
+    }
+    .shoppcart .content-shop .content-left .highlight{
+         color:#fff;
     }
     .shoppcart .content-shop .content-left .desc{
         display: inline-block;
@@ -161,4 +183,11 @@
         color:rgba(255,255,255,0.4);
         font-weight: 700;
     }
+     .shoppcart .content-shop .content-right .not-enough{
+        background:#2b333b;
+     }
+     .shoppcart .content-shop .content-right .enough{
+        background:#00b43c;
+        color:#fff;
+     }
 </style>

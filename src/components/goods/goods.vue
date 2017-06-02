@@ -30,6 +30,9 @@
                                     <span class="now">￥{{food.price}}</span>
                                     <span v-show="food.oldPrice"  class="old">￥{{food.oldPrice}}</span>
                                 </div>
+                                <div class="cont-wrap">
+                                    <cartControl :food='food'></cartControl>
+                                </div>
                             </div>
                         </li>
                     </ul>
@@ -42,6 +45,7 @@
 <script type="text/javascript">
 import BScroll from 'better-scroll'
 import shoppcart from 'components/shoppcart/shoppcart';
+import cartControl from 'components/cartconcontrol/cartconcontrol';
 const ERR_OK=0;
     export default{
         //父组件向子组件传递数据
@@ -95,7 +99,8 @@ const ERR_OK=0;
                     click:true   //设置为true的时候可以点击
                 });
                 this.foodsScroll=new BScroll(this.$refs.foodsWrap,{
-                    probeType:3
+                    probeType:3,
+                    click:true
                 });
                 this.foodsScroll.on('scroll',(pos)=>{
                     this.scrollY=Math.abs(Math.round(pos.y));
@@ -128,7 +133,8 @@ const ERR_OK=0;
             }
         },
         components:{
-            shoppcart
+            shoppcart,
+            cartControl
         }
        
     }
@@ -197,7 +203,9 @@ const ERR_OK=0;
     margin-right:10px; 
 }
 .goods .foots-wrap .food-list .food-item .food-content{
+    position: relative;
     flex:1;
+
 }
 .goods .foots-wrap .food-list .food-item .food-content .name{
     margin: 2px 0 8px 0;
@@ -250,4 +258,10 @@ const ERR_OK=0;
     color: rgba(147,153,159);
     background:#f3f5f7;
 } 
+.goods .foots-wrap .food-list .food-item .food-content .cont-wrap{
+ 
+   position: absolute;
+   right:0;
+   bottom:-2px;
+}
 </style>
