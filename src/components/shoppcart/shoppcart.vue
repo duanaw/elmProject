@@ -1,4 +1,5 @@
 <template>
+
     <div class="shoppcart">
       <div class="content-shop" @click="toggleList">
           <div class="content-left">
@@ -11,7 +12,7 @@
               <div class="price" :class="{'highlight':totalCount>0}">￥{{totalPrice}}</div>
               <div class="desc">另需配送费￥{{deliveryPrice}}元</div>
           </div>
-          <div class="content-right">
+          <div class="content-right" @click.stop.prevent="pay">
               <div class="pay" :class='payClass'>
                   {{payDesc}}
               </div>
@@ -20,7 +21,7 @@
       <div class="shoppcart-list " v-show="listShow">
           <div class="list-header">
               <h1 class="title">购物车</h1>
-              <span class="empty">清空</span>
+              <span class="empty" @click="empty">清空</span>
           </div>
           <div class="list-content" ref="listContent">
               <ul>
@@ -36,7 +37,10 @@
               </ul>
           </div>
       </div>
+
     </div>
+<!--  <div class="list-mask" v-show="listShow"></div>  -->
+  
 </template>
 <script type="text/javascript">
 import cartcontrol from 'components/cartconcontrol/cartconcontrol';
@@ -109,15 +113,18 @@ import BScroll from 'better-scroll'
                 }
                 var show=!this.fold;
                 if(show){
-                    this.$nextTick(()=>{
-                        this.scroll= new BScroll(this.$refs.listContent,{
-                            click:true
-                        });
+                  
+                  this.$nextTick(()=>{
+                    if(!this.scroll){
+                      this.scroll=new BScroll(this.$refs.listContent,{
+                      click:true
+                    });
                     }else{
-                        this.scroll.refresh();
+                      this.scroll.refresh();
                     }
-                        });
-                };
+                    
+                  })
+                }
                 return show;
             }
         },
@@ -127,6 +134,17 @@ import BScroll from 'better-scroll'
                 return;
                }
                this.fold=!this.fold
+            },
+            empty(){
+              this.selectFoods.forEach((food)=>{
+                food.count=0;
+              })
+            },
+            pay(){
+              if(this.totalPrice<this.minPrice){
+                return;
+              }
+              window.alert(`支付${this.totalPrice}元`)
             }
         },
         components:{
@@ -305,4 +323,15 @@ import BScroll from 'better-scroll'
     right:0;
     bottom:13px;
    }
+   .list-mask{
+   position:fixed;
+   top:0;
+   left:0;
+   width: 100%;
+   height: 100%;
+   z-index:40;
+   opacity: 1;
+   background: rgba(7,17,27,0.6);
+   backdrop-filter:blur(10px);
+  } 
 </style>
