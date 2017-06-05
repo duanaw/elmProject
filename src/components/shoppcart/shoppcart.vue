@@ -1,6 +1,6 @@
 <template>
     <div class="shoppcart">
-      <div class="content-shop">
+      <div class="content-shop" @click="toggleList">
           <div class="content-left">
               <div class="logo-wrap">
                   <div class="logo" :class="{'highlight':totalCount>0}">
@@ -15,12 +15,38 @@
               <div class="pay" :class='payClass'>
                   {{payDesc}}
               </div>
+          </div>  
+      </div>
+      <div class="shoppcart-list " v-show="listShow">
+          <div class="list-header">
+              <h1 class="title">购物车</h1>
+              <span class="empty">清空</span>
+          </div>
+          <div class="list-content" ref="listContent">
+              <ul>
+                  <li class="foodul" v-for="food in selectFoods">
+                      <span class="name">{{food.name}}</span>
+                      <div class="price">
+                          <span>￥{{food.price*food.count}}</span>
+                      </div>
+                      <div class="cartcontrol-wrap">
+                          <cartcontrol :food="food"></cartcontrol>
+                      </div>
+                  </li>
+              </ul>
           </div>
       </div>
     </div>
 </template>
 <script type="text/javascript">
+import cartcontrol from 'components/cartconcontrol/cartconcontrol';
+import BScroll from 'better-scroll'
     export default{
+         data(){
+                return{
+                  fold:true
+                }
+            },
         props:{
             selectFoods:{
                 type:Array,
@@ -33,6 +59,7 @@
                     ];
                 }
             },
+           
            deliveryPrice:{
             type:Number,
             default:0
@@ -74,7 +101,36 @@
                 }else{
                     return 'enough';
                 }
+            },
+            listShow(){
+                if(!this.totalCount){
+                    this.fold=true;
+                    return false;
+                }
+                var show=!this.fold;
+                if(show){
+                    this.$nextTick(()=>{
+                        this.scroll= new BScroll(this.$refs.listContent,{
+                            click:true
+                        });
+                    }else{
+                        this.scroll.refresh();
+                    }
+                        });
+                };
+                return show;
             }
+        },
+        methods:{
+            toggleList(){
+               if(!this.totalCount){
+                return;
+               }
+               this.fold=!this.fold
+            }
+        },
+        components:{
+            cartcontrol
         }
     }
 </script>
@@ -190,4 +246,63 @@
         background:#00b43c;
         color:#fff;
      }
+    .shoppcart .shoppcart-list{
+        position: absolute;
+        top:20px;
+        left:0;
+        z-index:-1;
+        width: 100%;
+        transition: all 0.5s;
+        transform:translate3d(0,-100%,0);
+    }
+   .shoppcart .shoppcart-list .list-header{
+    height:40px;
+    line-height: 40px;
+    padding:0 18px;
+    background:#f3f5f7;
+    border-bottom: 1px solid raga(7,17,27,0.1);
+   }
+   .shoppcart .shoppcart-list .list-header .title{
+    font-weight: 400;
+    float:left;
+    font-size: 14px;
+    color:rgb(7,17,27);
+   }
+   .shoppcart .shoppcart-list .list-header .empty{
+    float:right;
+    font-size: 12px;
+    color:rgb(0,160,220);
+   }
+   .shoppcart .shoppcart-list .list-content{
+        padding:0 18px;
+        max-height: 217px;
+        overflow: hidden;
+        background:#fff;
+   }
+   .shoppcart .shoppcart-list .list-content .foodul{
+    list-style: none;
+    position: relative;
+    padding:12px 0;
+    box-sizing: border-box;
+    border-bottom:1px solid rgba(7,17,27,0.1);
+   }
+   .shoppcart .shoppcart-list .list-content .foodul .name{
+    line-height: 24px;
+    font-size: 14px;
+    color:rgb(7,17,27);
+   }
+   .shoppcart .shoppcart-list .list-content .foodul .price{
+    position: absolute;
+    right:90px;
+    bottom:12px;
+    line-height: 24px;
+    font-size: 14px;
+    font-weight: 700;
+    color:#f01414;
+   }
+   .shoppcart .shoppcart-list .list-content .foodul .cartcontrol-wrap{
+    position: absolute;
+    right:0;
+    bottom:13px;
+   }
 </style>

@@ -39,7 +39,7 @@
                 </li>
             </ul>
         </div>
-        <shoppcart :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shoppcart>
+        <shoppcart :select-foods="selectFoods" :delivery-price="seller.deliveryPrice" :min-price="seller.minPrice"></shoppcart>
     </div>
 </template>
 <script type="text/javascript">
@@ -74,6 +74,17 @@ const ERR_OK=0;
 
                 }
                 return 0;
+            },
+            selectFoods(){
+                var foods=[];
+                this.goods.forEach((good)=>{
+                    good.foods.forEach((food)=>{
+                        if(food.count){
+                            foods.push(food)
+                        }
+                    });
+                });
+                return foods;
             }
         },
         //渲染后的
