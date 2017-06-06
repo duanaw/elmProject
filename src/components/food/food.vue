@@ -31,6 +31,21 @@
             <div class="rating-food">
                 <h1 class="title-food">商品评价</h1>
                 <ratingselect :select-type="selectType" :only-content='onlyContent' :desc="desc" :ratings='food.ratings'></ratingselect>
+                <div class="ratings-wrap">
+                    <ul v-show="food.ratings && food.ratings.length" >
+                        <li v-for="rating in food.ratings" class="rating-item" v-show="needShow(rating.rateType,rating.text)">
+                            <div class="user">
+                                <span class="name">{{rating.username}}</span>
+                                <img :src="rating.avatar" alt="" class="avatar" width="12" height="12">
+                            </div>
+                            <div class="time">{{rating.rateTime}}</div>
+                            <p class="text">
+                               <span class="{'up':rating.rateType===0,'down':rateType===1}"></span>{{rating.text}}
+                            </p>
+                        </li>
+                    </ul> 
+                    <div class="no-rating" v-show="!food.ratings || !food.ratings.length"></div>
+                </div>
             </div>
         </div>
     </div>
@@ -86,6 +101,17 @@ var All=2;
                     return;
                 }*/
                 Vue.set(this.food,'count',1)
+            },
+            needShow(type,text){
+
+                if(this.onlyContent && !text){
+                    return false;
+                }
+                if(this.selectType===All){
+                    return true;
+                }else{
+                    return type===this.selectType;
+                }
             }
         },
         components:{
@@ -209,5 +235,44 @@ var All=2;
     padding-left: 18px;
     font-size: 14px;
     color:rgb(7,17,27);
+}
+.food-wrap .rating-food .ratings-wrap{
+    padding:0 18px;
+}
+.food-wrap .rating-food .ratings-wrap .rating-item{
+    position: relative;
+    padding: 16px 0;
+    list-style: none;
+    border-bottom: 1px solid #ccc;
+}
+.food-wrap .rating-food .ratings-wrap .rating-item .user{
+    position: absolute;
+    right:0;
+    top:16px;
+    font-size: 0;
+    line-height: 12px;
+}
+.food-wrap .rating-food .ratings-wrap .rating-item .user .name{
+    display: inline-block;
+    margin-right: 6px;
+    vertical-align: top;
+    font-size: 10px;
+    color: rgb(147,153,159);
+}
+.food-wrap .rating-food .ratings-wrap .rating-item .user .avatar{
+    border-radius: 50%;
+}
+.food-wrap .rating-food .ratings-wrap .rating-item .time{
+    line-height: 12px;
+    font-size: 10px;
+    color: rgb(147,153,159);
+}
+.food-wrap .rating-food .ratings-wrap .rating-item .text{
+    line-height: 16px;
+    font-size: 12px;
+    color: rgb(7,17,27);
+} 
+.food-wrap .rating-food .ratings-wrap .rating-item .text .up{
+    margin-right: 4px;
 }
 </style>
