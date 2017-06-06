@@ -1,8 +1,8 @@
 <template>
     <div class="cartconcontrol">
-        <div class="cart-decrease" v-show='food.count>0' @click="decreaseCart">-</div>
+        <div class="cart-decrease" v-show='food.count>0'  @click.stop.prevent="decreaseCart">-</div>
         <div class="cart-count" v-show='food.count>0'>{{food.count}}</div>
-        <div class="cart-add" @click="addCard" ref="cartAdd">+</div>
+        <div class="cart-add" @click.stop.prevent="addCard" ref="cartAdd">+</div>
     </div>
 </template>
 <script type="text/javascript">

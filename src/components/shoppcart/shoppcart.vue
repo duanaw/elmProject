@@ -37,9 +37,9 @@
               </ul>
           </div>
       </div>
-
+<!-- <div class="list-mask" v-show="listShow"></div> -->
     </div>
-<!--  <div class="list-mask" v-show="listShow"></div>  -->
+  
   
 </template>
 <script type="text/javascript">
