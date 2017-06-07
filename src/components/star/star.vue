@@ -69,7 +69,7 @@ var CLS_OFF='off';
 	.star-36 .star-item{
 		width: 15px;
 		height: 15px;
-		margin-right: 16px;
+		margin-right: 6px;
 		
 	}
 	.star-36 &:last-child{
@@ -79,11 +79,11 @@ var CLS_OFF='off';
 		background: url("./img3.png");
 		background-size: 15px 15px;
 	}
-	star-36 .half{
+	.star-36 .half{
 		background: url("./img1.png");
 		background-size: 15px 15px;
 	}
-	star-36 .off{
+	.star-36 .off{
 		background: url("./img2.png");
 		background-size: 15px 15px;
 	}

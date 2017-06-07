@@ -38,13 +38,13 @@
                                 <span class="name">{{rating.username}}</span>
                                 <img :src="rating.avatar" alt="" class="avatar" width="12" height="12">
                             </div>
-                            <div class="time">{{rating.rateTime}}</div>
+                            <div class="time">{{rating.rateTime | formatDate}}</div>
                             <p class="text">
                                <span class="{'up':rating.rateType===0,'down':rateType===1}"></span>{{rating.text}}
                             </p>
                         </li>
                     </ul> 
-                    <div class="no-rating" v-show="!food.ratings || !food.ratings.length"></div>
+                    <div class="no-rating" v-show="!food.ratings || !food.ratings.length">暂无评价</div>
                 </div>
             </div>
         </div>
@@ -54,11 +54,13 @@
 import BScroll from 'better-scroll';
 import cartcontrol from 'components/cartconcontrol/cartconcontrol';
 import Vue from 'vue';
+import {formatDate} from '../../common/js/data.js';
 import split from "components/split/split";
 import ratingselect from "components/ratingselect/ratingselect";
 var POSITIVE=0;
 var NEGATIVE=0;
 var All=2;
+console.log(formatDate)
     export default{
         props:{
             food:{
@@ -118,6 +120,12 @@ var All=2;
             cartcontrol,
             split,
             ratingselect
+        },
+        filters:{
+           formatDate(time){
+            var data = new Date(time);
+            return formatDate(data,'yyyy-MM-dd hh:mm');
+           } 
         }
     }
 </script>
@@ -274,5 +282,10 @@ var All=2;
 } 
 .food-wrap .rating-food .ratings-wrap .rating-item .text .up{
     margin-right: 4px;
+}
+.food-wrap .rating-food .ratings-wrap .no-rating{
+    padding:16px 0;
+    font-size: 12px;
+    color:rgb(147,153,159);
 }
 </style>
