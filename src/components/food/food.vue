@@ -30,7 +30,7 @@
             <split></split>
             <div class="rating-food">
                 <h1 class="title-food">商品评价</h1>
-                <ratingselect :select-type="selectType" :only-content='onlyContent' :desc="desc" :ratings='food.ratings'></ratingselect>
+                <ratingselect :selectType="selectType" :onlyContent='onlyContent' :desc="desc" :ratings='food.ratings'></ratingselect>
                 <div class="ratings-wrap">
                     <ul v-show="food.ratings && food.ratings.length" >
                         <li v-for="rating in food.ratings" class="rating-item" v-show="needShow(rating.rateType,rating.text)">
@@ -288,4 +288,5 @@ console.log(formatDate)
     font-size: 12px;
     color:rgb(147,153,159);
 }
+
 </style>

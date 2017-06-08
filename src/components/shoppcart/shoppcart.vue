@@ -295,7 +295,8 @@ import BScroll from 'better-scroll'
         padding:0 18px;
         max-height: 217px;
         overflow: hidden;
-        background:#fff;
+        background:#141d27;
+        opacity: 0.7;
    }
    .shoppcart .shoppcart-list .list-content .foodul{
     list-style: none;
