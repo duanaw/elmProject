@@ -288,7 +288,7 @@ export default{
     flex:1;
     position: relative;
     top:-6px;
-    border-bottom:1px solid rgba(255,255,255,0.2) 
+    border-bottom:1px solid rgba(255,255,255,0.2); 
 }
 .detail .detail-warp .detail-main .line-title .text{
     padding:0 12px;

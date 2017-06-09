@@ -43,7 +43,7 @@
                              <span v-for="item in rating.recommend" class="item1">{{item}}</span>
                           </div>
                           <div class="time1"> {{rating.rateTime | formatDate}} </div>
-                             
+            
                          
                       </div>
                   </li>
